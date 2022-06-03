@@ -44,9 +44,11 @@ endif
 
 colorscheme spaceduck
 
+let $FZF_DEFAULT_COMMAND='find -L'
 let mapleader = " "
 
-nnoremap <leader>f :GFiles<CR>
-nnoremap <A-1> :Ex<CR>
+nnoremap <leader>f :Files<CR>
+nnoremap <leader>g :GFiles<CR>
+nnoremap <leader>1 :Ex<CR>
 
 
