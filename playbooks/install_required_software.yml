@@ -1,0 +1,111 @@
+---
+- name: Install Requirements
+  hosts: all
+  become: true
+  tasks:
+    - name: Update all packages to their latest version
+      apt:
+        name: "*"
+        state: latest
+    - name: Update cache
+      apt:
+        update_cache: yes
+    - name: Install tmux present
+      apt:
+        name: tmux
+        state: present
+    - name: Install Python latest
+      apt:
+        name: python3.9
+        state: latest
+    - name: Install FZF
+      apt:
+        name: fzf
+        state: present
+
+- name: Install Ohh My Zsh
+  hosts: all
+  become: true
+  tasks:
+    - name: Install ZShell
+      apt:
+        name: zsh
+        state: present
+    - name: Setup zsh for user
+      user:
+        name: "vagrant"
+        shell: /bin/zsh
+    - name: Download Oh My Zsh!
+      get_url:
+        url: https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh
+        dest: /home/vagrant
+    - name: Check for $ZSH
+      stat:
+        path: /root/.oh-my-zsh
+      register: check_for_zsh
+    - name: Delete previous installation
+      file:
+        path: /root/.oh-my-zsh
+        state: absent
+      when: check_for_zsh.stat.exists
+    - name: Execution permissions
+      file: 
+        path: /home/vagrant/install.sh
+        mode: 'u=rwx,o=rwx,g=rwx'
+    - name: Install Oh My Zsh!
+      shell: /home/vagrant/install.sh
+
+- name: Install Node
+  hosts: all
+  become: true
+  gather_facts: no
+  vars: 
+    VERSION: "node_16.x"
+    DISTRO: "focal"
+  tasks:
+    - name: Add nodejs apt key
+      apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+    - name: Add nodejs 16.x ppa for apt repo
+      apt_repository:
+        repo: "deb https://deb.nodesource.com/{{ VERSION }} {{ DISTRO }} main"
+        update_cache: yes
+    - name: Install nodejs
+      apt:
+        update_cache: yes
+        name: nodejs
+        state: present
+    - name: Install NPM-distributed command-line tools
+      npm:
+        global: yes
+        name: "{{ item }}"
+      with_items:
+        - nodemon
+
+
+- name: Install Terraform
+  hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+    - name: Check for Terraform
+      raw: test -e /usr/bin/terraform
+      failed_when: false
+      changed_when: false
+      register: terraform_check
+    - name: Install Terraform requirements
+      raw: sudo apt-get update && sudo apt-get install -y gnupg software-properties-common curl
+      register: terraform_requirements
+      when: terraform_check.rc != 0
+    - name: Add the GPG key
+      raw: curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+      register: add_gpg_key
+      when: terraform_check.rc != 0
+    - name: Add the HashiCorp Linux Repository
+      raw: sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+      register: add_hashicorp_repo
+      when: terraform_check.rc != 0
+    - name: Update tto add the repository, and install the Terraform CLI
+      raw: sudo apt-get update && sudo apt-get install terraform
+      when: terraform_check.rc != 0

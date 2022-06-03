@@ -1,0 +1,15 @@
+---
+- name: Copy required configuration files
+  hosts: all
+  tasks:
+    - name: Create a Symlink from al config files
+      file: 
+          src: "$HOME/app/playbooks/files/{{ item }}"
+          dest: "$HOME/{{ item }}"
+          state: link
+          force: yes
+      loop:
+          - .tmux.conf
+          - .bashrc
+          - .vimrc
+
