@@ -36,9 +36,9 @@ Plug 'pineapplegiant/spaceduck', { 'branch': 'main'}
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+Plug 'sainnhe/gruvbox-material'
 call plug#end()
 
-let mapleader = " "
 
 if exists('+termguicolors')
   let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
@@ -46,7 +46,23 @@ if exists('+termguicolors')
   set termguicolors
 endif
 
-colorscheme spaceduck
+" Important!!
+if has('termguicolors')
+  set termguicolors
+endif
+" For dark version.
+set background=dark
+" For light version.
+"set background=light
+" Set contrast.
+" This configuration option should be placed before `colorscheme gruvbox-material`.
+" Available values: 'hard', 'medium'(default), 'soft'
+let g:gruvbox_material_background = 'soft'
+" For better performance
+let g:gruvbox_material_better_performance = 1
+colorscheme gruvbox-material
+
+let mapleader = " "
 
 let $FZF_DEFAULT_COMMAND='find -L'
 let mapleader = " "
@@ -54,5 +70,3 @@ let mapleader = " "
 nnoremap <leader>f :Files<CR>
 nnoremap <leader>g :GFiles<CR>
 nnoremap <leader>1 :Ex<CR>
-
-
