@@ -47,10 +47,19 @@ yabai -m config window_gap                   06
 
 # apps to not manage (ignore)
 yabai -m rule --add app="^System Preferences$" manage=off
-yabai -m rule --add app="^Snagit$" manage=off
+yabai -m rule --add app=".*Snagit.*" manage=off
 yabai -m rule --add app="^Docker Desktop$" manage=off
 yabai -m rule --add app="^VirtualBox$" manage=off
-yabai -m rule --add app="^GitKraken$" manage=off
+yabai -m rule --add app="^zoom.us$" manage=off
+yabai -m rule --add app="^Harvest$" manage=off
+yabai -m rule --add app="^Installer$" manage=off
+yabai -m rule --add app="^Todoist$" manage=off
+yabai -m rule --add app="^PomoDone.*$" manage=off
+yabai -m rule --add app="^Finder$" manage=off
+yabai -m rule --add app="^Trello$" manage=off
+yabai -m rule --add app="^Code$" manage=off
+yabai -m rule --add app="^Music$" manage=off
+yabai -m rule --add app="^TablePlus$" manage=off
 
 
 echo "yabai configuration loaded.."

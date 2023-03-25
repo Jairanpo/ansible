@@ -1,5 +1,6 @@
 
 alias tmux="TERM=screen-256color-bce tmux"
+alias python=python3
 
 
 # This is so TMUX sessions share history
