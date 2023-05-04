@@ -1,0 +1,33 @@
+- name: print message
+  debug:
+    msg: "Running stow from {{ playbook_dir }}/tasks/stow.yml"
+- name: print message
+  debug:
+    msg: "{{ ansible_env.HOME }}"
+- name: Remove folder
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    state: absent
+- name: Cloning dotfiles
+  git:
+    repo: "git@github.com:Jairanpo/dotfiles.git"
+    dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
+    recursive: yes
+    update: yes
+    accept_hostkey: yes
+    version: main
+  tags: 
+    - install
+    - dotfiles
+- name: Make scripts executable
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.dotfiles/{{ item }}"
+    mode: u+x
+  with_items:
+    - macos
+    - install
+- name: Stow dotfiles
+  shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./macos"
+  tags: 
+    - install
+    - dotfiles
