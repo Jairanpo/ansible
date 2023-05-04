@@ -1,0 +1,7 @@
+---
+- name: MAC
+  hosts: localhost
+  tasks:
+    - include_tasks: tasks/homebrew.yml
+    - include_tasks: tasks/stow.yml
+

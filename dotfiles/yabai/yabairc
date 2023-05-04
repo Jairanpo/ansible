@@ -63,5 +63,6 @@ yabai -m rule --add app="^TablePlus$" manage=off
 yabai -m rule --add app="^Parallels Desktop$" manage=off
 yabai -m rule --add app="^Toggl Track$" manage=off
 yabai -m rule --add app="^NordVPN$" manage=off
+yabai -m rule --add app="^QuickTime Player$" manage=off
 
 echo "yabai configuration loaded.."

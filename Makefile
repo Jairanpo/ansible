@@ -7,3 +7,10 @@ link-config:
 	ln -s "$(PATH_TO_CONFIG)/config/.bashrc" "$(PATH_TO_HOME)/.bashrc" 
 	ln -s "$(PATH_TO_CONFIG)/config/.zshrc" "$(PATH_TO_HOME)/.zshrc" 
  
+run-play:
+	clear
+	ansible-playbook ./provision/play.yml
+
+stow:
+	clear
+	stow -d ./dotfiles -t ${HOME}
