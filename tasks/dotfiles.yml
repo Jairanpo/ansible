@@ -1,9 +1,3 @@
-- name: print message
-  debug:
-    msg: "Running stow from {{ playbook_dir }}/tasks/stow.yml"
-- name: print message
-  debug:
-    msg: "{{ ansible_env.HOME }}"
 - name: Remove folder
   file:
     path: "{{ lookup('env', 'HOME') }}/.dotfiles"
