@@ -25,9 +25,12 @@
     mode: u+x
   with_items:
     - macos
+    - ubuntu
     - install
+  when: "'darwin' in ansible_system"
 - name: Stow dotfiles
   shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./macos"
   tags: 
     - install
     - dotfiles
+  when: "'ubuntu' in ansible_distribution"
