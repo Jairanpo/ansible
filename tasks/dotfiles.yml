@@ -21,10 +21,17 @@
     - macos
     - ubuntu
     - install
-  when: "'darwin' in ansible_system"
-- name: Stow dotfiles
+- name: Stow dotfiles MacOs
   shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./macos"
   tags: 
     - install
+    - macos
+    - dotfiles
+  when: "'Darwin' in ansible_system"
+- name: Stow dotfiles for Ubuntu
+  shell: "cd {{ lookup('env', 'HOME') }}/.dotfiles && ./ubuntu"
+  tags: 
+    - install
+    - ubuntu
     - dotfiles
   when: "'ubuntu' in ansible_distribution"

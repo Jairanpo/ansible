@@ -2,7 +2,7 @@
     name: "{{ item }}"
     state: present
     update_homebrew: true
-  when: "'darwin' in ansible_system"
+  when: "'Darwin' in ansible_system"
   with_items:
     - git
     - fzf
