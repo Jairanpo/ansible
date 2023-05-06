@@ -8,6 +8,4 @@
     - stow
     - make
     - tmux
-    - nvim
-    - black
-    - python3
+    - neovim
