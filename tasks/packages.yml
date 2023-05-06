@@ -1,7 +1,6 @@
 - package:
     name: "{{ item }}"
     state: present
-    update: true
   when: "'Ubuntu' in ansible_distribution"
   with_items:
     - git
