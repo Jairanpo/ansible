@@ -34,4 +34,4 @@
     - install
     - ubuntu
     - dotfiles
-  when: "'ubuntu' in ansible_distribution"
+  when: "'Ubuntu' in ansible_distribution"

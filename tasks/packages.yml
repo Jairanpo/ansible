@@ -1,0 +1,14 @@
+- package:
+    name: "{{ item }}"
+    state: present
+    update: true
+  when: "'Ubuntu' in ansible_distribution"
+  with_items:
+    - git
+    - fzf
+    - stow
+    - make
+    - tmux
+    - nvim
+    - black
+    - python3
