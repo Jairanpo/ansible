@@ -35,8 +35,3 @@
     - ubuntu
     - dotfiles
   when: "'Ubuntu' in ansible_distribution"
-- name: Source .zshrc
-  shell: "source {{ lookup('env', 'HOME') }}/.zshrc"
-  tags:
-    - install
-    - dotfiles
