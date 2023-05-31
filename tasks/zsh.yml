@@ -1,3 +1,8 @@
+- name: Install Zsh
+  become: true
+  package:
+    name: zsh
+    state: present
 - name: Git checkout
   git:
     repo: 'https://github.com/romkatv/powerlevel10k.git'
