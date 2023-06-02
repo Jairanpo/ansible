@@ -1,0 +1,42 @@
+---
+- name: Distribution
+  debug:
+    msg: "{{ ansible_distribution }}"
+- name: Task to run on Fedora
+  when: "'Fedora' in ansible_distribution"
+  block:
+    - name: Install Required Packages
+      package: 
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - dnf-plugins-core
+        - python3-dnf
+
+    - name: Add Docker Repository
+      command: dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
+
+    - name: Install Docker Packages
+      package:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+
+    - name: Start and Enable Docker Service
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+
+
+
+
+
+
+    
+
+

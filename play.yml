@@ -40,7 +40,7 @@
         - dotfile
         - ssh
 
-- name: MAC
+- name: Run tasks
   hosts: localhost
   tasks:
     - include_tasks: tasks/zsh.yml
@@ -48,3 +48,10 @@
     - include_tasks: tasks/packages.yml
     - include_tasks: tasks/dotfiles.yml
 
+- name: Fedora Tasks
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/fedora/docker.yml
+  tags:
+    - fedora
