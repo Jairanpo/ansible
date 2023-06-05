@@ -1,8 +1,14 @@
-- name: Install Zsh
+- name: Install Zsh Mac
+  package:
+    name: zsh
+    state: present
+  when: "'Darwin' in ansible_system"
+- name: Install Zsh Linux
   become: true
   package:
     name: zsh
     state: present
+  when: "'Linux' in ansible_system"
 - name: Git checkout
   git:
     repo: 'https://github.com/romkatv/powerlevel10k.git'
