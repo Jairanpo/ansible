@@ -11,7 +11,7 @@
         mode: 0700
         state: directory
       tags:
-        - dotfile
+        - dotfiles
         - ssh
     - name: Install ssh key
       copy:
@@ -19,7 +19,7 @@
         dest: "{{ dest_key }}"
         mode: 0600
       tags:
-        - dotfile
+        - dotfiles
         - ssh
     - name: Install ssh key public
       copy:
@@ -27,7 +27,7 @@
         dest: "{{ dest_key }}.pub"
         mode: 0644
       tags:
-        - dotfile
+        - dotfiles
         - ssh
     - name: Set authorized key took from file
       authorized_key:
@@ -37,7 +37,7 @@
       with_fileglob:
         - "{{ lookup('env', 'HOME') }}/.ssh/*.pub"
       tags:
-        - dotfile
+        - dotfiles
         - ssh
 
 - name: Run tasks
@@ -46,7 +46,13 @@
     - include_tasks: tasks/zsh.yml
     - include_tasks: tasks/homebrew.yml
     - include_tasks: tasks/packages.yml
+
+- name: DOTFILES
+  hosts: localhost
+  tasks:
     - include_tasks: tasks/dotfiles.yml
+  tags:
+    - dotfiles
 
 - name: Fedora Tasks
   hosts: localhost
