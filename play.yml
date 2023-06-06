@@ -1,4 +1,9 @@
 ---
+- name: OS
+  hosts: localhost
+  tasks:
+    - debug:
+        msg: "{{ ansible_system }}"
 - name: SSH
   hosts: localhost
   vars:
@@ -61,3 +66,13 @@
     - include_tasks: tasks/fedora/docker.yml
   tags:
     - fedora
+ 
+- name: Macos Tasks
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/macos/global.yml
+  tags:
+    - macos
+    - shortcuts
+

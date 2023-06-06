@@ -9,3 +9,8 @@ fedora:
 dotfiles:
 	clear
 	ansible-playbook play.yml --ask-become-pass --ask-vault-pass --tags dotfiles
+
+tags:
+	clear
+	ansible-playbook play.yml --ask-become-pass --ask-vault-pass --tags ${k}
+
