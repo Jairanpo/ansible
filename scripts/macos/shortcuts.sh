@@ -14,8 +14,8 @@ defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Cut' -string "
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Zoom In' -string "^\$="
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Zoom Out' -string "^-"
 
-defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Select Previous Tab' -string "^d"
-defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Select Next Tab' -string "^f"
+defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Select Previous Tab' -string "~d"
+defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Select Next Tab' -string "~f"
 
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'New Window' -string "^n"
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'New Tab' -string "^t"
