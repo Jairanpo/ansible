@@ -21,3 +21,4 @@ defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'New Window' -s
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'New Tab' -string "^t"
 
 defaults write com.tinyapp.TablePlus NSUserKeyEquivalents -dict-add "Open a Database..." -string "^k"
+defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Close" -string "^w"
