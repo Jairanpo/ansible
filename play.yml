@@ -76,3 +76,12 @@
     - macos
     - shortcuts
 
+- name: Ubuntu Tasks
+  hosts: localhost
+  become: true
+  vars:
+    ubuntu_codename: "{{ ansible_distribution_release | lower }}"
+  tasks:
+    - include_tasks: tasks/ubuntu/docker.yml
+  tags:
+    - ubuntu

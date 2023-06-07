@@ -35,3 +35,7 @@
     - linux
     - dotfiles
   when: "'Linux' in ansible_system"
+- name: Source .zshrc
+  shell: "cd {{ lookup('env', 'HOME') }}/.zshrc"
+  ignore_errors: yes
+
