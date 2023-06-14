@@ -31,3 +31,4 @@ defaults write com.tinyapp.TablePlus NSUserKeyEquivalents -dict-add "Undo Typing
 
 # iTerm2
 defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Close" -string "^w"
+defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "New Tab" -string "^t"

@@ -59,15 +59,7 @@
   tags:
     - dotfiles
 
-- name: Fedora Tasks
-  hosts: localhost
-  become: true
-  tasks:
-    - include_tasks: tasks/fedora/docker.yml
-  tags:
-    - fedora
- 
-- name: Macos Tasks
+- name: Macos
   hosts: localhost
   become: true
   tasks:
@@ -75,13 +67,3 @@
   tags:
     - macos
     - shortcuts
-
-- name: Ubuntu Tasks
-  hosts: localhost
-  become: true
-  vars:
-    ubuntu_codename: "{{ ansible_distribution_release | lower }}"
-  tasks:
-    - include_tasks: tasks/ubuntu/docker.yml
-  tags:
-    - ubuntu

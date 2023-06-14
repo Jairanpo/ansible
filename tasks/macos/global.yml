@@ -1,9 +1,10 @@
 ---
 - name: Task to run on Macos
   when: "'Darwin' in ansible_system"
+  ignore_errors: yes
   block:
     - name: Run Shortcuts Scripts
-      shell: "./scripts/macos/shortcuts.sh"
+      shell: "source ./scripts/macos/shortcuts.sh"
 
 
 
