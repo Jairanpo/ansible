@@ -1,0 +1,12 @@
+---
+- name: Download JetBrains Mono font archive
+  get_url:
+    url: "https://github.com/ryanoasis/nerd-fonts/releases/download/v3.0.2/JetBrainsMono.zip"
+    dest: "/tmp/JetBrainsMono.zip"
+
+- name: Extract font files
+  unarchive:
+    src: "/tmp/JetBrainsMono.zip"
+    dest: "/Library/Fonts"
+    remote_src: true
+    creates: "/Library/Fonts/JetBrains Mono Regular Nerd Font Complete.ttf"
