@@ -1,6 +1,6 @@
 - package:
     name: "{{ item }}"
-    state: present
+    state: latest
   when: "'Linux' in ansible_system"
   become: true
   with_items:
