@@ -10,3 +10,16 @@
     dest: "/Library/Fonts"
     remote_src: true
     creates: "/Library/Fonts/JetBrains Mono Regular Nerd Font Complete.ttf"
+  when: "'Darwin' in ansible_system"
+
+- name: Extract font files
+  unarchive:
+    src: "/tmp/JetBrainsMono.zip"
+    dest: "~/.fonts"
+    remote_src: true
+    creates: "~/.fonts/JetBrains Mono Regular Nerd Font Complete.ttf"
+  when: "'Linux' in ansible_system"
+
+- name: Update font cache
+  command: fc-cache -f -v
+  when: "'Linux' in ansible_system"
