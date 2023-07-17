@@ -1,3 +1,10 @@
+- name: Install tmux plugins
+  git: 
+    repo: "git@github.com:tmux-plugins/tpm.git"
+    dest: "{{ lookup('env', 'HOME')}}/.tmux/plugins/tpm"
+    version: master
+    update: yes
+
 - name: Remove folder
   file:
     path: "{{ lookup('env', 'HOME') }}/.dotfiles"
