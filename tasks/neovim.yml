@@ -1,20 +1,14 @@
-- name: Add Neovim PPA repository
-  apt_repository:
-    repo: "ppa:neovim-ppa/latest"
-    state: present
-  when: "'Linux' in ansible_system"
-
-- name: Update apt cache
-  apt:
-    update_cache: yes
-  when: "'Linux' in ansible_system"
-
-- name: Install Neovim
-  apt:
-    name: neovim
-    state: latest
-  when: "'Linux' in ansible_system"
-
+- name: Install Neovim on Ubuntu
+  when: "'Ubuntu' in ansible_distribution"
+  block:
+    - name: Download file
+      get_url:
+        url: "https://github.com/neovim/neovim/releases/latest/download/nvim.appimage"
+        dest: "{{ lookup('env', 'HOME') }}/.local/bin/nvim"
+    - name: Set executable permission
+      file:
+        path: "{{ lookup('env', 'HOME') }}/.local/bin/nvim"
+        mode: u+x
 - name: Install Neovim MacOs
   package:
     name: neovim
