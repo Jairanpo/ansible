@@ -12,12 +12,18 @@
     creates: "/Library/Fonts/JetBrains Mono Regular Nerd Font Complete.ttf"
   when: "'Darwin' in ansible_system"
 
+- name: Font dir
+  file:
+    path: "{{ lookup('env', 'HOME') }}/.fonts"
+    state: directory
+  when: "'Linux' in ansible_system"
+
 - name: Extract font files
   unarchive:
     src: "/tmp/JetBrainsMono.zip"
-    dest: "~/.fonts"
+    dest: "{{ lookup('env', 'HOME') }}/.fonts"
     remote_src: true
-    creates: "~/.fonts/JetBrains Mono Regular Nerd Font Complete.ttf"
+    creates: "{{ lookup('env', 'HOME') }}/.fonts/JetBrains Mono Regular Nerd Font Complete.ttf"
   when: "'Linux' in ansible_system"
 
 - name: Update font cache
