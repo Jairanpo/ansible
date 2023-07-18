@@ -10,5 +10,4 @@
     - make
     - tmux
     - i3
-    - neovim
     - direnv

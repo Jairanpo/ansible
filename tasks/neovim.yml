@@ -1,0 +1,24 @@
+- name: Add Neovim PPA repository
+  apt_repository:
+    repo: "ppa:neovim-ppa/latest"
+    state: present
+  when: "'Linux' in ansible_system"
+
+- name: Update apt cache
+  apt:
+    update_cache: yes
+  when: "'Linux' in ansible_system"
+
+- name: Install Neovim
+  apt:
+    name: neovim
+    state: latest
+  when: "'Linux' in ansible_system"
+
+- name: Install Neovim MacOs
+  package:
+    name: neovim
+    state: latest
+  when: "'Darwin' in ansible_system"
+
+
