@@ -51,7 +51,6 @@
     - include_tasks: tasks/fonts.yml
     - include_tasks: tasks/zsh.yml
     - include_tasks: tasks/homebrew.yml
-    - include_tasks: tasks/neovim.yml
     - include_tasks: tasks/packages.yml
 
 - name: DOTFILES
