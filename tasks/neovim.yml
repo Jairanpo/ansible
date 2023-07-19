@@ -1,0 +1,27 @@
+---
+- name: Install for MacOS
+  when: "'Darwin' in ansible_distribution"
+  block:
+    - name: Install neovim
+      package:
+        name: neovim
+- name: Install Neovim Linux
+  when: "'Ubuntu' in ansible_distribution"
+  block:
+    - name: Install required packages
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - software-properties-common
+
+    - name: Install repository
+      become: true
+      shell: add-apt-repository --yes ppa:neovim-ppa/stable
+
+    - name: Update cache
+      become: true
+      shell: apt-get update
+
+    - name: Install neovim
+      become: true
+      shell: apt-get install neovim
