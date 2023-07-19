@@ -9,9 +9,11 @@
   when: "'Ubuntu' in ansible_distribution"
   block:
     - name: Install required packages
+      become: true
       apt:
         name: "{{ item }}"
       with_items:
+        - neovim
         - software-properties-common
 
     - name: Install repository
