@@ -33,3 +33,8 @@ defaults write com.tinyapp.TablePlus NSUserKeyEquivalents -dict-add "Undo Typing
 # iTerm2
 defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "Close" -string "^w"
 defaults write com.googlecode.iterm2 NSUserKeyEquivalents -dict-add "New Tab" -string "^t"
+
+# Datagrip
+defaults write com.jetbrains.datagrip NSUserKeyEquivalents -dict-add "Execute" -string "^↩"
+defaults write com.jetbrains.datagrip NSUserKeyEquivalents -dict-add "Paste as Plain Text" -string "^\$v"
+defaults write com.jetbrains.datagrip NSUserKeyEquivalents -dict-add "Paste as From History" -string "^~v"
