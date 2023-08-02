@@ -26,4 +26,4 @@
 
     - name: Install neovim
       become: true
-      shell: apt-get install neovim
+      shell: apt-get install -y neovim
