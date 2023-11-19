@@ -13,6 +13,7 @@ defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Cut' -string "
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Undo' -string "^z"
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Redo' -string "^y"
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Select All' -string "^\$a"
+defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Find...' -string "^f"
 
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Zoom In' -string "^\$="
 defaults write .GlobalPreferences NSUserKeyEquivalents -dict-add 'Zoom Out' -string "^-"
