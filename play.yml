@@ -53,7 +53,7 @@
     - include_tasks: tasks/homebrew.yml
     - include_tasks: tasks/packages.yml
     - include_tasks: tasks/fonts.yml
-    - include_tasks: tasks/watchers/yml
+    - include_tasks: tasks/watchers.yml
 
 - name: DOTFILES
   hosts: localhost
