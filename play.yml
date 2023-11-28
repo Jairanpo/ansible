@@ -70,3 +70,13 @@
   tags:
     - macos
     - shortcuts
+
+- name: Arch
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/arch/virtualbox.yml
+  tags:
+    - arch
+    - virtualbox
+    - vagrant

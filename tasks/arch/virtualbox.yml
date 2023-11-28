@@ -1,0 +1,32 @@
+---
+- name: Distribution
+  debug:
+    msg: "{{ ansible_distribution }}"
+- name: Task to run on Arch
+  when: "'ArchLinux' in ansible_distribution"
+  block:
+    - name: Update package cache
+      pacman:
+        update_cache: yes
+
+    - name: Install VirtualBox
+      pacman:
+        name: virtualbox
+        state: present
+
+    - name: Install VirtualBox Extension Pack
+      command: >
+        VBoxManage extpack install --replace VBoxGuestAdditions.iso
+      args:
+        chdir: /opt/VirtualBox
+      when: "'virtualbox' in ansible_facts.packages"
+
+    - name: Start VirtualBox services
+      systemd:
+        name: "{{ item }}"
+        state: started
+      with_items:
+        - vboxweb-service
+        - vboxballoonctrl-service
+        - vboxautostart-service
+      ignore_errors: yes   
