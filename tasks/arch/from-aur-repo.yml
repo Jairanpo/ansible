@@ -1,0 +1,22 @@
+---
+- name: Log
+  debug: 
+    msg: "Will install: {{ url  }}/{{ item }}.git at {{ dest_dir }}/{{ item }}"
+  with_items: "{{ packages }}"
+
+- name: Clone AUR
+  git:
+    repo: "{{ url }}/{{ item }}.git"
+    dest: "{{ dest_dir }}/{{ item }}"
+  with_items: "{{ packages }}"
+
+- name: Build and install AUR package
+  # makepkg cannot be executed as root, 
+  # also make sure /tmp directory owner
+  # is your User:
+  become: no
+  command: chdir="{{ dest_dir }}/{{ item }}" makepkg -si --noconfirm
+  with_items: "{{ packages }}"
+
+
+
