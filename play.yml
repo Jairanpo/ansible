@@ -85,6 +85,17 @@
   hosts: localhost
   become: true
   vars:
+    packages:
+      - "pamixer"
+  tasks:
+    - include_tasks: tasks/arch/packages.yml
+  tags:
+    - arch
+
+- name: Arch-Software
+  hosts: localhost
+  become: true
+  vars:
     url: "https://aur.archlinux.org"
     dest_dir: "{{ lookup('env', 'HOME') }}/tmp"
     packages:

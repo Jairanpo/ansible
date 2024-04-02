@@ -1,0 +1,8 @@
+---
+- name: Condition
+  when : "'ArchLinux' in ansible_distribution"
+  block:
+    - name: Install Packages
+      package:
+        name: "{{ item }}"
+      with_items: "{{ packages }}"
