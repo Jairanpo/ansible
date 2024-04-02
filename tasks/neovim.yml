@@ -5,7 +5,7 @@
     - name: Install neovim
       package:
         name: neovim
-- name: Install Neovim Linux
+- name: Install Neovim Ubuntu
   when: "'Ubuntu' in ansible_distribution"
   block:
     - name: Install required packages
@@ -27,3 +27,23 @@
     - name: Install neovim
       become: true
       shell: apt-get install -y neovim
+
+- name: Install Neovim Debian
+  when: "'Debian' in ansible_distribution"
+  block:
+    - name: Install required packages
+      become: true
+      apt:
+        name: "{{ item }}"
+      with_items:
+        - neovim
+        - software-properties-common
+
+    - name: Update cache
+      become: true
+      shell: apt-get update
+
+    - name: Install neovim
+      become: true
+      apt:
+        name: neovim
