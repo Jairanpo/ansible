@@ -1,0 +1,20 @@
+- name: Distribution
+  debug:
+    msg: "{{ ansible_distribution }} {{ ubuntu_codename }}"
+- name: Task to run on Fedora
+  when: "'Debian' in ansible_distribution"
+  block:
+    - name: Download ripgrep package
+      get_url:
+        url: https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
+        dest: /tmp/ripgrep_14.1.0-1_amd64.deb
+
+    - name: Install ripgrep package
+      apt:
+        deb: /tmp/ripgrep_14.1.0-1_amd64.deb
+        state: present
+
+    - name: Clean up ripgrep package
+      file:
+        path: /tmp/ripgrep_14.1.0-1_amd64.deb
+        state: absent

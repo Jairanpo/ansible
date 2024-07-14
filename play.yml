@@ -59,8 +59,29 @@
   hosts: localhost
   tasks:
     - include_tasks: tasks/dotfiles.yml
+    - include_tasks: tasks/dotfiles.yml
   tags:
     - dotfiles
+
+
+- name: Debian
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/debian/ripgrep.yml
+  tags:
+    - debian
+    - shortcuts
+
+- name: Ubuntu
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/ubuntu/ripgrep.yml
+  tags:
+    - ubuntu
+    - shortcuts
+
 
 - name: Macos
   hosts: localhost
@@ -109,7 +130,5 @@
     - include_tasks: tasks/arch/from-aur-repo.yml
   tags:
     - arch
-    - aur
-   
-  
+    - aur  
 
