@@ -3,6 +3,7 @@
     msg: "{{ ansible_distribution }} {{ ubuntu_codename }}"
 - name: Task to run on Fedora
   when: "'Debian' in ansible_distribution"
+  ignore_errors: true
   block:
     - name: Download ripgrep package
       get_url:
