@@ -5,45 +5,43 @@
     - name: Install neovim
       package:
         name: neovim
-- name: Install Neovim Ubuntu
-  when: "'Ubuntu' in ansible_distribution"
+- name: Install Neovim Ubuntu/Debian
+  when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
   block:
-    - name: Install required packages
-      become: true
+    - name: Download the latest Neovim AppImage
+      get_url:
+        url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        dest: /tmp/nvim.appimage
+
+    - name: Ensure nvim.appimage is executable
+      file:
+        path: /tmp/nvim.appimage
+        mode: '0755'
+        state: file
+
+    - name: Move nvim.appimage to /usr/local/bin/nvim
+      command: mv /tmp/nvim.appimage /usr/local/bin/nvim
+
+    - name: Download ripgrep .deb package
+      get_url:
+        url: https://github.com/BurntSushi/ripgrep/releases/download/14.1.0/ripgrep_14.1.0-1_amd64.deb
+        dest: /tmp/ripgrep_14.1.0-1_amd64.deb
+
+    - name: Install ripgrep .deb package
       apt:
+        deb: /tmp/ripgrep_14.1.0-1_amd64.deb
+        state: present
+
+    - name: Ensure ripgrep is installed from APT
+      package:
+        name: ripgrep
+        state: present
+        update_cache: yes
+
+    - name: Install fuse and libfuse2
+      package:
         name: "{{ item }}"
       with_items:
-        - neovim
-        - software-properties-common
+        - fuse
+        - libfuse2
 
-    - name: Install repository
-      become: true
-      shell: add-apt-repository --yes ppa:neovim-ppa/stable
-
-    - name: Update cache
-      become: true
-      shell: apt-get update
-
-    - name: Install neovim
-      become: true
-      shell: apt-get install -y neovim
-
-- name: Install Neovim Debian
-  when: "'Debian' in ansible_distribution"
-  block:
-    - name: Install required packages
-      become: true
-      apt:
-        name: "{{ item }}"
-      with_items:
-        - neovim
-        - software-properties-common
-
-    - name: Update cache
-      become: true
-      shell: apt-get update
-
-    - name: Install neovim
-      become: true
-      apt:
-        name: neovim
