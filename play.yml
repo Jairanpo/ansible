@@ -47,6 +47,7 @@
 
 - name: Run tasks
   hosts: localhost
+  become: true
   tasks:
     - include_tasks: tasks/neovim.yml
     - include_tasks: tasks/zsh.yml
