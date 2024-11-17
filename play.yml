@@ -19,12 +19,12 @@
         - dotfiles
         - ssh
     - name: Install ssh key
+      ignore_errors: true
       copy:
         src: "{{ source_key }}"
         dest: "{{ dest_key }}"
         mode: 0600
       tags:
-        - dotfiles
         - ssh
     - name: Install ssh key public
       copy:
@@ -32,7 +32,6 @@
         dest: "{{ dest_key }}.pub"
         mode: 0644
       tags:
-        - dotfiles
         - ssh
     - name: Set authorized key took from file
       authorized_key:

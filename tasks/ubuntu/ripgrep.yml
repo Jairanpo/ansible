@@ -1,7 +1,4 @@
 ---
-- name: Distribution
-  debug:
-    msg: "{{ ansible_distribution }} {{ ubuntu_codename }}"
 - name: Task to run on Fedora
   when: "'Ubuntu' in ansible_distribution"
   block:
