@@ -8,7 +8,7 @@
         state: present
     - name: Add Docker Repository
       apt_repository:
-        repo: "deb https://download.docker.com/linux/ubuntu {{ ubuntu_codename }} stable"
+        repo: "deb https://download.docker.com/linux/debian {{ debian_codename }} stable"
         state: present
     - name: Update apt and install docker cd
       package:
