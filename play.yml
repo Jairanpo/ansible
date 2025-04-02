@@ -110,6 +110,9 @@
       - hyprland
       - waybar
       - dolphin
+      - wofi
+      - rofi
+      - polybar
   tasks:
     - include_tasks: tasks/arch/packages.yml
   tags:
