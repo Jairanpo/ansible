@@ -107,6 +107,7 @@
   vars:
     packages:
       - pamixer
+      - feh
       - hyprland
       - waybar
       - dolphin
