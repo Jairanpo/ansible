@@ -10,7 +10,7 @@
   block:
     - name: Download the latest Neovim AppImage
       get_url:
-        url: https://github.com/neovim/neovim/releases/latest/download/nvim.appimage
+        url: https://github.com/neovim/neovim/releases/download/nightly/nvim-linux-x86_64.appimage
         dest: /tmp/nvim.appimage
 
     - name: Ensure nvim.appimage is executable
