@@ -1,0 +1,83 @@
+---
+#------------------------------------------
+# This python library its required for the next
+# steps:
+- name: Install dconf module dependencies
+  become: yes
+  package:
+    name: python3-psutil
+    state: present
+    update_cache: yes
+
+#------------------------------------------
+# Gnome Forge and dconf does not work
+# with dynamic workspaces, so we turn them off:
+- name: Set number of static workspaces (e.g., 10)
+  dconf:
+    key: "/org/gnome/mutter/dynamic-workspaces"
+    value: "false"
+    state: "present"
+
+- name: Set the number of workspaces
+  dconf:
+    key: "/org/gnome/desktop/wm/preferences/num-workspaces"
+    value: "10" # Set how many workspaces you want
+    state: "present"
+
+- name: Change workspace switching shortcuts to Alt+<number>
+  vars:
+    mappings:
+        - key: 1
+          value: 1
+        - key: 2
+          value: 2
+        - key: 3
+          value: 3
+        - key: 4
+          value: 4
+        - key: 5
+          value: 5
+        - key: 6
+          value: 6
+        - key: 7
+          value: 7
+        - key: 8
+          value: 8
+        - key: 9
+          value: 9
+        - key: 0
+          value: 10
+  dconf:
+    key: "/org/gnome/desktop/wm/keybindings/switch-to-workspace-{{ item.value }}"
+    value: "['<Alt>{{ item.key }}']"
+    state: "present"
+  loop: "{{ mappings }}"
+
+- name: Change 'move to workspace' shortcuts to Shift+Alt+<number>
+  vars:
+    mappings:
+        - key: 1
+          value: 1
+        - key: 2
+          value: 2
+        - key: 3
+          value: 3
+        - key: 4
+          value: 4
+        - key: 5
+          value: 5
+        - key: 6
+          value: 6
+        - key: 7
+          value: 7
+        - key: 8
+          value: 8
+        - key: 9
+          value: 9
+        - key: 0
+          value: 10
+  dconf:
+    key: "/org/gnome/desktop/wm/keybindings/move-to-workspace-{{ item.value }}"
+    value: "['<Shift><Alt>{{ item.key }}']"
+    state: "present"
+  loop: "{{ mappings }}"

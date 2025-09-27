@@ -1,6 +1,7 @@
 ---
 - name: Task to run on Fedora
   when: "'Ubuntu' in ansible_distribution"
+  become: true
   block:
     - name: Download ripgrep package
       get_url:

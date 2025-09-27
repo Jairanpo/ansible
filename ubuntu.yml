@@ -1,0 +1,16 @@
+- name : Packages
+  hosts: localhost
+  tasks:
+    - package:
+        name: "{{ item }}"
+        state: latest
+      become: true
+      with_items:
+        - gnome-tweaks
+
+- name: GNOME Forge Extension
+  hosts: localhost
+  tasks:
+    - include_tasks: tasks/ubuntu/forge.yml
+    - include_tasks: tasks/ubuntu/keyboard-mappings.yml
+

@@ -1,0 +1,19 @@
+- name: "Ensure GNOME extensions directory exists"
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions"
+    state: directory
+    mode: '0755'
+
+- name: "Download and install Forge extension"
+  ansible.builtin.unarchive:
+    src: "https://github.com/forge-ext/forge/archive/refs/tags/v48-88.zip"
+    dest: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com"
+    remote_src: yes
+    creates: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com/metadata.json"
+
+- name: "Notify user to restart GNOME Shell for Forge"
+  ansible.builtin.debug:
+    msg: >
+      'Forge' has been successfully installed.
+      Please log out and log back in, or restart GNOME Shell
+      (Press Alt+F2, type 'r', and hit Enter) to activate it.

@@ -8,7 +8,7 @@ fedora:
 
 ubuntu:
 	clear
-	ansible-playbook play.yml --ask-become-pass --ask-vault-pass --tags ubuntu
+	ansible-playbook ubuntu.yml --ask-become-pass
 
 dotfiles:
 	clear

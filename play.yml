@@ -74,9 +74,10 @@
 
 - name: Ubuntu
   hosts: localhost
-  become: true
   tasks:
     - include_tasks: tasks/ubuntu/ripgrep.yml
+    - include_tasks: tasks/ubuntu/forge.yml
+    - include_tasks: tasks/ubuntu/docker.yml
   tags:
     - ubuntu
     - shortcuts
