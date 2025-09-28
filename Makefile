@@ -10,6 +10,10 @@ ubuntu:
 	clear
 	ansible-playbook ubuntu.yml --ask-become-pass
 
+ubuntu-%:
+	clear
+	ansible-playbook ubuntu.yml --ask-become-pass --tags $*
+
 dotfiles:
 	clear
 	ansible-playbook play.yml --ask-become-pass --ask-vault-pass --tags dotfiles

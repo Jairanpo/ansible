@@ -1,0 +1,21 @@
+---
+- name: Ensure the applications directory exists
+  file:
+    path: "{{ applications_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Create .desktop file for Unreal Editor
+  copy:
+    dest: "{{ applications_dir }}/{{ desktop_file_name }}"
+    content: |
+      [Desktop Entry]
+      Name=Unreal Editor
+      Comment=Create stunning real-time 3D experiences
+      Exec="{{ unreal_engine_path }}/Engine/Binaries/Linux/UnrealEditor"
+      Icon={{ unreal_engine_path }}/Engine/Content/Editor/Slate/Icons/icon_128x128.png
+      Terminal=false
+      Type=Application
+      Categories=Development;Graphics;3DGraphics;GameDevelopment;
+      StartupNotify=true
+    mode: '0644' 

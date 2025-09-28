@@ -99,3 +99,29 @@
     value: "['<Shift><Alt>{{ item.key }}']"
     state: "present"
   loop: "{{ mappings }}"
+
+- name: Forge key mappings
+  vars:
+    mappings:
+      # Move focus ---------
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-focus-up"
+        value: "['<Alt>k']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-focus-down"
+        value: "['<Alt>j']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-focus-right"
+        value: "['<Alt>l']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-focus-left"
+        value: "['<Alt>h']"
+      # Layouts -------------
+      - key: "/org/gnome/shell/extensions/forge/keybindings/con-tabbed-layout-toggle"
+        value: "['<Alt>w']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/con-tabbed-stacked-toggle"
+        value: "['<Alt>e']"
+  dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
+    state: "present"
+  loop: "{{ mappings }}"
+
+
+

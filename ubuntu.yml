@@ -1,5 +1,14 @@
+- name: Use Kitty
+  hosts: localhost
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+  tasks:
+    - include_tasks: tasks/ubuntu/kitty.yml
+
 - name: GNOME Hotkeys
   hosts: localhost
+  tags:
+    - keymappings
   tasks:
     - include_tasks: tasks/ubuntu/keyboard-mappings.yml
 
@@ -45,3 +54,21 @@
     go_version: "1.25.1"
   tasks:
     - include_tasks: tasks/ubuntu/golang.yml
+
+- name: Link Unreal
+  hosts: localhost
+  tags:
+    - unreal
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+    unreal_engine_path: "/home/{{ ansible_user_id }}/UnrealEngineBin"
+    desktop_file_name: "unreal-editor.desktop"
+    applications_dir: "/home/{{ ansible_user_id }}/.local/share/applications"
+  tasks:
+    - include_tasks: tasks/ubuntu/unreal.yml
+  handlers:
+    - name: Reload desktop database
+      command: update-desktop-database
+      listen: "Reload desktop database"
+      become: yes
+

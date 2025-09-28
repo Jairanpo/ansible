@@ -1,0 +1,21 @@
+---
+- name: Ensure kitty is installed
+  become: yes
+  package:
+    name: kitty
+    state: present
+    update_cache: yes
+
+- name: Set kitty as the default x-terminal-emulator
+  become: yes
+  alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/kitty
+    state: selected
+
+- name: Set kitty as the default terminal for the desktop user
+  become: yes
+  dconf:
+    key: /org/gnome/desktop/default-applications/terminal/exec
+    value: "'kitty'"
+    state: present
