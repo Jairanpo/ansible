@@ -1,0 +1,40 @@
+  - name: Ensure dependencies are installed
+    become: true
+    package:
+      name:
+        - unzip
+        - zip
+        - curl
+      state: present
+
+  - name: Check if SDKMAN! is already installed
+    stat:
+      path: "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh"
+    register: sdkman_stat
+
+  - name: Download and install SDKMAN!
+    shell: >
+      curl -s "https://get.sdkman.io" | bash
+    args:
+      creates: "/home/{{ user_name }}/.sdkman/bin/sdkman-init.sh"
+    when: not sdkman_stat.stat.exists
+    environment:
+      HOME: "/home/{{ user_name }}"
+
+  - name: Install the specified Java version
+    shell: >
+      . /home/{{ user_name }}/.sdkman/bin/sdkman-init.sh &&
+      sdk install java {{ java_version }}
+    args:
+      executable: /bin/bash
+      creates: "/home/{{ user_name }}/.sdkman/candidates/java/{{ java_version }}"
+    register: java_install_result
+    changed_when: "'Installing:' in java_install_result.stdout"
+
+  - name: Set the default Java version
+    shell: >
+      . /home/{{ user_name }}/.sdkman/bin/sdkman-init.sh &&
+      sdk default java {{ java_version }}
+    args:
+      executable: /bin/bash
+    changed_when: "'Default java version set to' in java_install_result.stdout"

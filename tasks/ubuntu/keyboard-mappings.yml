@@ -9,6 +9,24 @@
     state: present
     update_cache: yes
 
+- name: Set search hotkey
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/search"
+    value: "['<Alt>d']"
+    state: "present"
+
+- name: Set close window hotkey
+  dconf:
+    key: "/org/gnome/desktop/wm/keybindings/close"
+    value: "['<Shift><Alt>q']"
+    state: "present"
+
+- name: Set close window hotkey
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/terminal"
+    value: "['<Alt>Return']"
+    state: "present"
+
 #------------------------------------------
 # Gnome Forge and dconf does not work
 # with dynamic workspaces, so we turn them off:

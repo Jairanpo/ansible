@@ -4,7 +4,11 @@
   block:
     - name: Install neovim
       package:
-        name: neovim
+        name: "{{ item }}"
+      with_items:
+        - neovim
+        - ripgrep
+
 - name: Install Neovim Ubuntu/Debian
   when: ansible_distribution == "Ubuntu" or ansible_distribution == "Debian"
   block:

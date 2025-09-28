@@ -1,0 +1,38 @@
+---
+- name: Download Go binary
+  get_url:
+    url: https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz
+    dest: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+    mode: '0644'
+    #checksum: "sha256:https://go.dev/dl/go{{ go_version }}.linux-amd64.tar.gz.sha256"
+
+- name: Check if Go is already installed
+  stat:
+    path: "/usr/local/go/bin/go"
+  register: go_binary
+
+- name: Get version of existing Go installation (if it exists)
+  command: "/usr/local/go/bin/go version"
+  when: go_binary.stat.exists
+  register: go_version_check
+  changed_when: false
+
+- name: Unarchive Go binary
+  unarchive:
+    src: "/tmp/go{{ go_version }}.linux-amd64.tar.gz"
+    dest: "/usr/local"
+    remote_src: yes
+  when: not go_binary.stat.exists or go_version not in go_version_check.stdout | default('')
+
+- name: Add Go binary path to the user's .bashrc
+  ansible.builtin.blockinfile:
+    path: "/home/{{ user_name }}/.bashrc"
+    block: |
+      # Add Go to PATH
+      export PATH=$PATH:/usr/local/go/bin
+    marker: "# {mark} ANSIBLE MANAGED BLOCK FOR GO PATH"
+    create: yes
+    owner: "{{ user_name }}"
+    group: "{{ user_name }}"
+    mode: '0644'
+

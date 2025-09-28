@@ -1,3 +1,14 @@
+- name: GNOME Hotkeys
+  hosts: localhost
+  tasks:
+    - include_tasks: tasks/ubuntu/keyboard-mappings.yml
+
+- name : Neovim
+  hosts: localhost
+  become: true
+  tasks:
+    - include_tasks: tasks/multi-platform/neovim.yml
+
 - name : Packages
   hosts: localhost
   tasks:
@@ -8,9 +19,29 @@
       with_items:
         - gnome-tweaks
 
-- name: GNOME Forge Extension
+- name: Install NPM/Node
   hosts: localhost
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+    nvm_version: "v0.40.3"
   tasks:
-    - include_tasks: tasks/ubuntu/forge.yml
-    - include_tasks: tasks/ubuntu/keyboard-mappings.yml
+    - include_tasks: tasks/ubuntu/node.yml
 
+
+- name: Install SDKMAN and Java
+  hosts: localhost
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+    java_version: "21-graalce"
+  tasks:
+    - include_tasks: tasks/ubuntu/java.yml
+
+
+- name: Install Golang
+  hosts: localhost
+  become: true
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+    go_version: "1.25.1"
+  tasks:
+    - include_tasks: tasks/ubuntu/golang.yml

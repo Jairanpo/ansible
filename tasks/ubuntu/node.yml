@@ -1,0 +1,43 @@
+- name: Ensure required packages are installed
+  become: true
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - curl
+    - npm
+
+- name: Check if nvm is already installed
+  stat:
+    path: "/home/{{ user_name }}/.nvm/nvm.sh"
+  register: nvm_stat
+
+- name: Download and install nvm
+  shell: >
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/{{ nvm_version }}/install.sh | bash
+  args:
+    creates: "/home/{{ user_name }}/.nvm/nvm.sh"
+  when: not nvm_stat.stat.exists
+  environment:
+    HOME: "/home/{{ user_name }}"
+
+- name: Add nvm to shell profile if not already present
+  lineinfile:
+    path: "/home/{{ user_name }}/.bashrc"
+    line: 'export NVM_DIR="$HOME/.nvm" && [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"'
+    create: true
+
+- name: Install the latest stable version of Node.js
+  shell: >
+    . /home/{{ user_name }}/.nvm/nvm.sh && nvm install node
+  args:
+    executable: /bin/bash
+  register: node_install_result
+  changed_when: "'Now using node' in node_install_result.stdout"
+
+- name: Set the latest installed version as the default
+  shell: >
+    . /home/{{ user_name }}/.nvm/nvm.sh && nvm alias default node
+  args:
+    executable: /bin/bash
+  changed_when: false
