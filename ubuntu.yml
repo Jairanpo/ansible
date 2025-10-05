@@ -5,6 +5,19 @@
   tasks:
     - include_tasks: tasks/ubuntu/kitty.yml
 
+- name: GNOME Mouse Handedness Toggle
+  hosts: localhost
+  tags:
+    - keymappings
+    - mouse
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+    script_path: "{{ ansible_user_dir }}/.local/bin/toggle-mouse-handedness.sh"
+    toggle_shortcut: "<Alt>m"
+    shortcut_name: "Toggle Mouse Handedness"
+  tasks:
+    - include_tasks: tasks/ubuntu/main-mouse-button-toggle.yml
+
 - name: GNOME Hotkeys
   hosts: localhost
   tags:

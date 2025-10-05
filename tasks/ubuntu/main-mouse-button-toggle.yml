@@ -1,0 +1,41 @@
+- name: Ensure the scripts directory exists
+  file:
+    path: "{{ ansible_user_dir }}/.local/bin"
+    state: directory
+    mode: '0755'
+
+- name: Deploy the toggle script
+  copy:
+    content: |
+      #!/bin/bash
+      gsettings_key="org.gnome.desktop.peripherals.mouse left-handed"
+      current_setting=$(gsettings get "$gsettings_key")
+      if [[ "$current_setting" == "true" ]]; then
+          gsettings set "$gsettings_key" "false"
+      else
+          gsettings set "$gsettings_key" "true"
+      fi
+    dest: "{{ script_path }}"
+    mode: '0755'
+
+- name: Set the hotkey command and name
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
+    value: "'{{ script_path }}'"
+    state: present
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
+    value: "'{{ script_path }}'"
+    state: present
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
+    value: "'{{ shortcut_name }}'"
+    state: present
+
+- name: Add the new shortcut to the list of custom keybindings
+  dconf:
+    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
+    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+    state: present
+
+

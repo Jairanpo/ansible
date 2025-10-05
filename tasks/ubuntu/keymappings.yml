@@ -7,7 +7,7 @@
   package:
     name: python3-psutil
     state: present
-    update_cache: yes
+    update_cache: yes 
 
 - name: Set search hotkey
   dconf:
@@ -122,6 +122,7 @@
     value: "{{ item.value }}"
     state: "present"
   loop: "{{ mappings }}"
+
 
 
 

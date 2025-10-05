@@ -63,7 +63,6 @@
   hosts: localhost
   tasks:
     - include_tasks: tasks/dotfiles.yml
-    - include_tasks: tasks/dotfiles.yml
   tags:
     - dotfiles
 
