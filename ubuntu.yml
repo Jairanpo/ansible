@@ -13,8 +13,9 @@
   vars:
     user_name: "{{ lookup('env', 'USER') }}"
     script_path: "{{ ansible_user_dir }}/.local/bin/toggle-mouse-handedness.sh"
-    toggle_shortcut: "<Alt>m"
+    shortcut_binding: "<Alt>m"
     shortcut_name: "Toggle Mouse Handedness"
+    new_keybinding_path: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
   tasks:
     - include_tasks: tasks/ubuntu/main-mouse-button-toggle.yml
 

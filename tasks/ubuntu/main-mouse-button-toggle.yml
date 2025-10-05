@@ -8,34 +8,23 @@
   copy:
     content: |
       #!/bin/bash
-      gsettings_key="org.gnome.desktop.peripherals.mouse left-handed"
-      current_setting=$(gsettings get "$gsettings_key")
-      if [[ "$current_setting" == "true" ]]; then
-          gsettings set "$gsettings_key" "false"
+      current=$(dconf read /org/gnome/desktop/peripherals/mouse/left-handed)
+      if [[ "$current" == "true" ]]; then
+        dconf write /org/gnome/desktop/peripherals/mouse/left-handed false
       else
-          gsettings set "$gsettings_key" "true"
+        dconf write /org/gnome/desktop/peripherals/mouse/left-handed true
       fi
     dest: "{{ script_path }}"
     mode: '0755'
 
-- name: Set the hotkey command and name
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/binding"
-    value: "'{{ script_path }}'"
+- name: Define the custom keybinding's command and name
+  community.general.dconf:
+    key: "{{ item.key }}"
+    value: "{{ item.value }}"
     state: present
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/command"
-    value: "'{{ script_path }}'"
-    state: present
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/name"
-    value: "'{{ shortcut_name }}'"
-    state: present
-
-- name: Add the new shortcut to the list of custom keybindings
-  dconf:
-    key: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings"
-    value: "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
-    state: present
+  with_items:
+    - { key: "{{ new_keybinding_path }}command", value: "'{{ script_path }}'" }
+    - { key: "{{ new_keybinding_path }}name", value: "'{{ shortcut_name }}'" }
+    - { key: "{{ new_keybinding_path }}binding", value: "'{{ shortcut_binding }}'" }
 
 
