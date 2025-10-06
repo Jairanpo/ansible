@@ -41,6 +41,7 @@
       become: true
       with_items:
         - gnome-tweaks
+        - clangd
 
 - name: Install NPM/Node
   hosts: localhost
