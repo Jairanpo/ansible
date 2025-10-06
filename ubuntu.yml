@@ -5,6 +5,11 @@
   tasks:
     - include_tasks: tasks/ubuntu/kitty.yml
 
+- name: Kensington Blade Remapping
+  command: >
+    xinput set-button-map "Kensington Slimblade Trackball" 3 2 1
+  register: xinput_result 
+
 - name: GNOME Mouse Handedness Toggle
   hosts: localhost
   tags:
