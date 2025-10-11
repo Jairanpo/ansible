@@ -1,0 +1,54 @@
+---
+- name: Create swap mouse buttons script
+  copy:
+    dest: "{{ script_path }}"
+    mode: '0755'
+    content: |
+      #!/bin/bash
+      
+      # Wait for X server to be ready
+      sleep 2
+      
+      # Find the Kensington device ID
+      DEVICE_ID=$(xinput list | grep -i "kensington" | grep -o 'id=[0-9]*' | grep -o '[0-9]*' | head -n 1)
+      
+      if [ -z "$DEVICE_ID" ]; then
+          echo "Kensington device not found"
+          exit 1
+      fi
+      
+      # Swap left and right mouse buttons (1 and 3)
+      # Default mapping is: 1 2 3 4 5 6 7 8 9
+      # Swapped mapping is: 3 2 1 4 5 6 7 8 9
+      xinput set-button-map "$DEVICE_ID" 3 2 1 4 5 6 7 8 9
+      
+      echo "Mouse buttons swapped for device ID: $DEVICE_ID" >> /tmp/mouse-swap.log
+
+- name: Create autostart directory
+  file:
+    path: "{{ autostart_dir }}"
+    state: directory
+    mode: '0755'
+
+- name: Create desktop entry for autostart
+  copy:
+    dest: "{{ autostart_dir }}/swap-mouse-buttons.desktop"
+    mode: '0644'
+    content: |
+      [Desktop Entry]
+      Type=Application
+      Name=Swap Mouse Buttons
+      Comment=Swap left and right click for Kensington mouse
+      Exec={{ script_path }}
+      Terminal=false
+      X-GNOME-Autostart-enabled=true
+      Hidden=false
+
+- name: Test the script
+  command: "{{ script_path }}"
+  register: test_result
+  ignore_errors: true
+
+- name: Display test result
+  debug:
+    msg: "Script executed. Check if mouse buttons are swapped. Log: {{ test_result.stdout }}"

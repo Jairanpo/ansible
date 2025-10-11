@@ -6,9 +6,13 @@
     - include_tasks: tasks/ubuntu/kitty.yml
 
 - name: Kensington Blade Remapping
-  command: >
-    xinput set-button-map "Kensington Slimblade Trackball" 3 2 1
-  register: xinput_result 
+  hosts: localhost
+  vars:
+    script_name: swap-kensinton-mouse-buttons.sh
+    script_path: "{{ ansible_env.HOME }}/{{ script_name }}"
+    autostart_dir: "{{ ansible_env.HOME }}/.config/autostart"
+  tasks:
+    - include_tasks: tasks/ubuntu/kensinton-blade.yml
 
 - name: GNOME Mouse Handedness Toggle
   hosts: localhost
@@ -29,7 +33,7 @@
   tags:
     - keymappings
   tasks:
-    - include_tasks: tasks/ubuntu/keyboard-mappings.yml
+    - include_tasks: tasks/ubuntu/keymappings.yml
 
 - name : Neovim
   hosts: localhost
