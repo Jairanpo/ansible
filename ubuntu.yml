@@ -7,6 +7,8 @@
 
 - name: Kensington Blade Remapping
   hosts: localhost
+  tags:
+    - kensington
   vars:
     script_name: swap-kensinton-mouse-buttons.sh
     script_path: "{{ ansible_env.HOME }}/{{ script_name }}"
