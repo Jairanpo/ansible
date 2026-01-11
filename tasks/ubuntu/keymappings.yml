@@ -112,6 +112,15 @@
         value: "['<Alt>l']"
       - key: "/org/gnome/shell/extensions/forge/keybindings/window-focus-left"
         value: "['<Alt>h']"
+      # Move/swap windows ---
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-move-up"
+        value: "['<Shift><Alt>k']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-move-down"
+        value: "['<Shift><Alt>j']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-move-right"
+        value: "['<Shift><Alt>l']"
+      - key: "/org/gnome/shell/extensions/forge/keybindings/window-move-left"
+        value: "['<Shift><Alt>h']"
       # Layouts -------------
       - key: "/org/gnome/shell/extensions/forge/keybindings/con-tabbed-layout-toggle"
         value: "['<Alt>w']"
