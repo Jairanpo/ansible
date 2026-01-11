@@ -37,6 +37,15 @@
   tasks:
     - include_tasks: tasks/ubuntu/keymappings.yml
 
+- name: GNOME Forge Extension
+  hosts: localhost
+  tags:
+    - popos
+    - gnome
+    - forge
+  tasks:
+    - include_tasks: tasks/ubuntu/forge.yml
+
 - name : Neovim
   hosts: localhost
   become: true
@@ -53,6 +62,7 @@
       with_items:
         - gnome-tweaks
         - clangd
+        - tmux
 
 - name: Install NPM/Node
   hosts: localhost

@@ -1,3 +1,10 @@
+- name: Required Packages
+  become: yes
+  package: 
+    name: "{{ item }}"
+  with_items:
+    - zsh
+    - stow
 - name: Install tmux plugins
   git: 
     repo: "https://github.com/tmux-plugins/tpm"
@@ -11,7 +18,7 @@
     state: absent
 - name: Cloning dotfiles
   git:
-    repo: "git@github.com:Jairanpo/dotfiles.git"
+    repo: "https://github.com/Jairanpo/dotfiles.git"
     dest: "{{ lookup('env', 'HOME') }}/.dotfiles"
     recursive: yes
     update: yes

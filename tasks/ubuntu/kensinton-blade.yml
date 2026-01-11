@@ -1,4 +1,10 @@
 ---
+- name: Install xinput
+  become: yes
+  package:
+    name: xinput
+    state: present
+
 - name: Create swap mouse buttons script
   copy:
     dest: "{{ script_path }}"

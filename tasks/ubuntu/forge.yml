@@ -4,11 +4,16 @@
     state: directory
     mode: '0755'
 
-- name: "Download and install Forge extension"
+- name: "Download Forge extension"
   ansible.builtin.unarchive:
     src: "https://github.com/forge-ext/forge/archive/refs/tags/v48-88.zip"
-    dest: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com"
+    dest: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions"
     remote_src: yes
+    creates: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge-48-88"
+
+- name: "Rename Forge directory to proper extension ID"
+  ansible.builtin.command:
+    cmd: mv "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge-48-88" "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com"
     creates: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com/metadata.json"
 
 - name: "Notify user to restart GNOME Shell for Forge"
