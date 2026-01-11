@@ -1,0 +1,69 @@
+---
+- name: Install KVM and related packages
+  become: true
+  package:
+    name:
+      - qemu-kvm
+      - libvirt-daemon-system
+      - libvirt-clients
+      - bridge-utils
+      - virt-manager
+      - virtinst
+      - libvirt-dev
+      - build-essential
+      - ruby-dev
+    state: present
+    update_cache: true
+
+- name: Add user to libvirt group
+  become: true
+  user:
+    name: "{{ user_name }}"
+    groups: libvirt
+    append: yes
+
+- name: Add user to kvm group
+  become: true
+  user:
+    name: "{{ user_name }}"
+    groups: kvm
+    append: yes
+
+- name: Enable and start libvirtd service
+  become: true
+  systemd:
+    name: libvirtd
+    enabled: yes
+    state: started
+
+- name: Add HashiCorp GPG key
+  become: true
+  apt_key:
+    url: https://apt.releases.hashicorp.com/gpg
+    state: present
+
+- name: Add HashiCorp repository
+  become: true
+  apt_repository:
+    repo: "deb [arch=amd64] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+
+- name: Install Vagrant
+  become: true
+  package:
+    name: vagrant
+    state: present
+    update_cache: true
+
+- name: Check if vagrant-libvirt plugin is installed
+  become: false
+  command: vagrant plugin list
+  register: vagrant_plugins
+  changed_when: false
+  failed_when: false
+
+- name: Install libvirt plugin for Vagrant
+  become: false
+  command: vagrant plugin install vagrant-libvirt
+  when: "'vagrant-libvirt' not in vagrant_plugins.stdout"
+  register: vagrant_plugin

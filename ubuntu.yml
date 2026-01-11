@@ -91,6 +91,13 @@
   tasks:
     - include_tasks: tasks/ubuntu/golang.yml
 
+- name: Install KVM and Vagrant
+  hosts: localhost
+  vars:
+    user_name: "{{ lookup('env', 'USER') }}"
+  tasks:
+    - include_tasks: tasks/ubuntu/kvm-vagrant.yml
+
 - name: Link Unreal
   hosts: localhost
   tags:
