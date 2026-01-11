@@ -1,23 +1,30 @@
+- name: Packages
+  become: true
+  package:
+    name: "{{ item }}"
+  with_items:
+    - gnome-browser-connector
+
 - name: "Ensure GNOME extensions directory exists"
-  ansible.builtin.file:
+  file:
     path: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions"
     state: directory
     mode: '0755'
 
 - name: "Download Forge extension"
-  ansible.builtin.unarchive:
+  unarchive:
     src: "https://github.com/forge-ext/forge/archive/refs/tags/v48-88.zip"
     dest: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions"
     remote_src: yes
     creates: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge-48-88"
 
 - name: "Rename Forge directory to proper extension ID"
-  ansible.builtin.command:
+  command:
     cmd: mv "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge-48-88" "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com"
     creates: "{{ ansible_env.HOME }}/.local/share/gnome-shell/extensions/forge@jmmaranan.com/metadata.json"
 
 - name: "Notify user to restart GNOME Shell for Forge"
-  ansible.builtin.debug:
+  debug:
     msg: >
       'Forge' has been successfully installed.
       Please log out and log back in, or restart GNOME Shell

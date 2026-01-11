@@ -5,6 +5,7 @@
   with_items:
     - zsh
     - stow
+    - fzf
 - name: Install tmux plugins
   git: 
     repo: "https://github.com/tmux-plugins/tpm"
