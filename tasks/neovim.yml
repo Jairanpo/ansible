@@ -1,0 +1,62 @@
+---
+- name: Update apt cache
+  apt:
+    update_cache: yes
+    cache_valid_time: 3600
+- name: Install required dependencies
+  apt:
+    name:
+      - curl
+      - gnupg
+      - software-properties-common
+      - apt-transport-https
+      - ca-certificates
+      - build-essential
+      - git
+    state: present
+- name: Remove old neovim installation
+  apt:
+    name:
+      - neovim
+      - neovim-runtime
+    state: absent
+    purge: yes
+- name: Download Neovim 0.10 AppImage
+  get_url:
+    url: "https://github.com/neovim/neovim/releases/download/v0.10.0/nvim.appimage"
+    dest: /tmp/nvim.appimage
+    mode: '0755'
+- name: Create /opt/nvim directory
+  file:
+    path: /opt/nvim
+    state: directory
+    mode: '0755'
+- name: Extract Neovim AppImage
+  command: /tmp/nvim.appimage --appimage-extract
+  args:
+    chdir: /tmp
+    creates: /tmp/squashfs-root
+- name: Copy Neovim files to /opt/nvim
+  copy:
+    src: /tmp/squashfs-root/
+    dest: /opt/nvim/
+    mode: preserve
+    remote_src: yes
+- name: Create neovim symlink
+  file:
+    src: /opt/nvim/usr/bin/nvim
+    dest: /usr/local/bin/nvim
+    state: link
+- name: Clean up temporary files
+  file:
+    path: "{{ item }}"
+    state: absent
+  loop:
+    - /tmp/nvim.appimage
+    - /tmp/squashfs-root
+- name: Verify Neovim installation
+  command: nvim --version
+  register: nvim_version
+- name: Display Neovim version
+  debug:
+    var: nvim_version.stdout_lines
